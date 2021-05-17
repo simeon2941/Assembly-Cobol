@@ -1,0 +1,144 @@
+                   J E S 2  J O B  L O G  --  S Y S T E M  2 9 6 4  --  N O D E  S V S C J E S 2        
+
+ 
+12.25.35 JOB07410 ---- THURSDAY,  10 SEP 2020 ----
+12.25.35 JOB07410  IRR010I  USERID KC03I73  IS ASSIGNED TO THIS JOB.
+12.25.37 JOB07410  ICH70001I KC03I73  LAST ACCESS AT 12:09:36 ON THURSDAY, SEPTEMBER 10, 2020
+12.25.37 JOB07410  $HASP373 KC03I73A STARTED - INIT 1    - CLASS A        - SYS 2964
+12.25.37 JOB07410  $HASP395 KC03I73A ENDED - RC=0000
+
+------ JES2 JOB STATISTICS ------
+
+
+  10 SEP 2020 JOB EXECUTION DATE
+
+
+           48 CARDS READ
+
+
+          121 SYSOUT PRINT RECORDS
+
+
+            0 SYSOUT PUNCH RECORDS
+
+
+           12 SYSOUT SPOOL KBYTES
+
+
+         0.01 MINUTES EXECUTION TIME
+!! END OF JES SPOOL FILE !!
+       1 //KC03I73A JOB ,'S. LICO',MSGCLASS=H                                    JOB07410
+         //*                                                                             
+         //*****************************************************************             
+         //*                                                               *             
+         //*  CSCI 465               ASSIGNMENT 2               FALL 2020  *             
+         //*                                                               *             
+         //*  DEVELOPER NAME: Simeon Lico                                  *             
+         //*  DATE DUE: 09/11/2020                                         *             
+         //*                                                               *             
+         //*  PURPOSE: The purpose of this program is to fetch a program   *             
+         //*  object from an existing load library and executing it. This  *             
+         //*  program consists of two job steps. The first job step fetches*             
+         //*  and executes program object READRECS which is stored         *             
+         //*  DECKERS load  library. The second step will do fetch and     *             
+         //*  execute a pprogram object named  WRTERECS wich is stored in  *             
+         //*  DECKERS load library.                                        *             
+         //*****************************************************************             
+         //*                                                                             
+         //*JSTEP with fetch and execute a program object named READRECS                 
+       2 //JSTEP01  EXEC PGM=READRECS                                                    
+         //*                                                                             
+         //*Indicates where readrecs will be fetched                                     
+       3 //STEPLIB  DD DSN=KC02322.CSCI465.LOADLIB,DISP=SHR                              
+         //*                                                                             
+         //*Reads the input from data2, displacment i shared                             
+       4 //RECSIN   DD DSN=KC02322.CSCI465.DATAFA20(DATA2),                              
+         //            DISP=SHR                                                          
+         //*                                                                             
+         //* output the data into a temporary data set                                   
+       5 //RECSOUT  DD DSN=&&OBJMOD,                                                     
+         //            DCB=(LRECL=80,BLKSIZE=880,RECFM=FB),                              
+         //            DISP=(MOD,PASS)                                                   
+         //*                                                                             
+       6 //SYSUDUMP DD SYSOUT=*                                                          
+         //*                                                                             
+         //*fetch and execute wrterecs                                                   
+       7 //JSTEP02  EXEC PGM=WRTERECS                                                    
+         //*                                                                             
+       8 //STEPLIB  DD DSN=KC02322.CSCI465.LOADLIB,DISP=SHR                              
+         //*                                                                             
+         //*reads the input from the temp data set we passed before                      
+       9 //RECSIN   DD DSN=&&OBJMOD,                                                     
+         //            DISP=(MOD,DELETE)                                                 
+         //*                                                                             
+         //*output all the data                                                          
+      10 //RECSOUT  DD SYSOUT=*                                                          
+         //*                                                                             
+      11 //SYSUDUMP DD SYSOUT=*                                                          
+!! END OF JES SPOOL FILE !!
+ICH70001I KC03I73  LAST ACCESS AT 12:09:36 ON THURSDAY, SEPTEMBER 10, 2020
+IEFA111I KC03I73A IS USING THE FOLLOWING JOB RELATED SETTINGS:
+         SWA=ABOVE,TIOT SIZE=32K,DSENQSHR=DISALLOW,GDGBIAS=JOB
+IEF236I ALLOC. FOR KC03I73A JSTEP01
+IGD103I SMS ALLOCATED TO DDNAME STEPLIB
+IGD103I SMS ALLOCATED TO DDNAME RECSIN
+IGD101I SMS ALLOCATED TO DDNAME (RECSOUT )
+        DSN (SYS20254.T122536.RA000.KC03I73A.OBJMOD.H01  )
+        STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+        VOL SER NOS= TEMP00                                                                
+IEF237I JES2 ALLOCATED TO SYSUDUMP
+IEF142I KC03I73A JSTEP01 - STEP WAS EXECUTED - COND CODE 0000
+IGD104I KC02322.CSCI465.LOADLIB                      RETAINED,  DDNAME=STEPLIB 
+IGD104I KC02322.CSCI465.DATAFA20                     RETAINED,  DDNAME=RECSIN  
+IGD106I SYS20254.T122536.RA000.KC03I73A.OBJMOD.H01   PASSED,    DDNAME=RECSOUT 
+IEF285I   KC03I73.KC03I73A.JOB07410.D0000101.?         SYSOUT        
+IEF373I STEP/JSTEP01 /START 2020254.1225
+IEF032I STEP/JSTEP01 /STOP  2020254.1225 
+        CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+        VIRT:    88K  SYS:   256K  EXT:     2592K  SYS:    12124K
+        ATB- REAL:                  1044K  SLOTS:                     0K
+             VIRT- ALLOC:      11M SHRD:       0M
+IEFA108I KC03I73A JSTEP02 RECSIN - PASSED DATA SET INFORMATION FOUND. MOD IS TREATED AS OLD
+IEF236I ALLOC. FOR KC03I73A JSTEP02
+IGD103I SMS ALLOCATED TO DDNAME STEPLIB
+IGD103I SMS ALLOCATED TO DDNAME RECSIN
+IEF237I JES2 ALLOCATED TO RECSOUT
+IEF237I JES2 ALLOCATED TO SYSUDUMP
+IEF142I KC03I73A JSTEP02 - STEP WAS EXECUTED - COND CODE 0000
+IGD104I KC02322.CSCI465.LOADLIB                      RETAINED,  DDNAME=STEPLIB 
+IGD105I SYS20254.T122536.RA000.KC03I73A.OBJMOD.H01   DELETED,   DDNAME=RECSIN  
+IEF285I   KC03I73.KC03I73A.JOB07410.D0000102.?         SYSOUT        
+IEF285I   KC03I73.KC03I73A.JOB07410.D0000103.?         SYSOUT        
+IEF373I STEP/JSTEP02 /START 2020254.1225
+IEF032I STEP/JSTEP02 /STOP  2020254.1225 
+        CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+        VIRT:    92K  SYS:   256K  EXT:     2588K  SYS:    12124K
+        ATB- REAL:                  1044K  SLOTS:                     0K
+             VIRT- ALLOC:      11M SHRD:       0M
+IEF375I  JOB/KC03I73A/START 2020254.1225
+IEF033I  JOB/KC03I73A/STOP  2020254.1225 
+        CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+!! END OF JES SPOOL FILE !!
+
+QUOTATIONS FROM TWO IMPORTANT AMERICAN HISTORICAL DOCUMENTS            FALL 2020
+
+"We hold these truths to be self-evident, that all men are created              
+
+equal, that they are endowed by their Creator with certain unalienable          
+
+Rights, that among these are Life, Liberty and the pursuit of                   
+
+Happiness." -- Declaration of Independence, 1776                                
+
+"We the People of the United States, in Order to form a more perfect            
+
+Union, establish Justice, insure domestic Tranquility, provide for the          
+
+common defence, promote the general Welfare, and secure the Blessings           
+
+of Liberty to ourselves and our Posterity, do ordain and establish this         
+
+Constitution of the United States of America." -- Preamble to the U.S.          
+
+Constitution, 1789                                                              
+!! END OF JES SPOOL FILE !!
